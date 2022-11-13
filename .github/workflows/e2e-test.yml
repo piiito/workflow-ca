@@ -4,23 +4,18 @@ on:
   - workflow_dispatch
 
 jobs:
-  run-e2e-tests:
-    name: Run E2E Tests
+  cypress-run:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout under $GITHUB_WORKSPACE
-        uses: actions/checkout@main
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm i
 
-      - name: Build SASS
-        run: npm run build
-
-      - name: run cypress tests with electron
+      - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          start: npm run dev
-          wait-on: "http://127.0.0.1:8080/"
+          build: npm run build
+          start: npm start
           browser: electron
